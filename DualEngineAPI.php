@@ -82,7 +82,8 @@ function serveDiscover($page, $type) {
 
     $endpoint = ($type === 'tv') ? '/discover/tv' : '/discover/movie';
     $params = [
-        'api_key' => TMDB_API_KEY, 'page' => $page, 'language' => 'en-US',
+        'api_key' => TMDB_API_KEY, 'page' => $page, 'language' => 'en-US','region' => 'IN',
+        'with_original_language' => 'hi|te|ta|ml|kn',
         'sort_by' => $_GET['sort'] ?? 'popularity.desc',
         'include_adult' => false, 'with_genres' => $_GET['genre'] ?? ''
     ];
