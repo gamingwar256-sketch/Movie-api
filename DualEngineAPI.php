@@ -29,7 +29,7 @@ header('Content-Type: application/json');
 header('X-Robots-Tag: noindex, nofollow'); 
 
 // 2. CONFIGURATION
-define('TMDB_API_KEY', '99bdeb1a4cbad03f58a318115e4887ca');
+define('TMDB_API_KEY', '5478181d128d405468f1d7a676908f08');
 define('TMDB_BASE_URL', 'http://api.themoviedb.org/3');
 define('CACHE_PATH', __DIR__ . '/cache/');
 
@@ -82,7 +82,7 @@ function serveDiscover($page, $type) {
 
     $endpoint = ($type === 'tv') ? '/discover/tv' : '/discover/movie';
     $params = [
-        'api_key' => TMDB_API_KEY, 'page' => $page, 'language' => 'en-US',
+        'api_key' => TMDB_API_KEY, 'page' => $page, 'language' => 'en-US','region' => 'IN','with_original_language' => 'hi|en|te|ta|ml|kn',
         'sort_by' => $_GET['sort'] ?? 'popularity.desc',
         'include_adult' => false, 'with_genres' => $_GET['genre'] ?? ''
     ];
