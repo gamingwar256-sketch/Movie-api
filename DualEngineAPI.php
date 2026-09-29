@@ -139,8 +139,8 @@ function serveStreamSources($id, $type, $season, $episode) {
     $servers = [];
 
     // --- SERVER 1: VidSrc (Reliable, uses TMDB) ---
-    // Pattern: cinesrc.st/embed/movie/{tmdb}
-      $url1 = "https://cinesrc.st/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}");
+    // Pattern: vidsrc.cc/embed/movie/{tmdb}
+      $url1 = "https://vidsrc.cc/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}");
       $url1 = $url1 . "?audio=hi";
       $servers[] = ['label' => 'Server 1 (Fast HD)', 'icon' => '🚀', 'data' => base64_encode($url1)];
 
