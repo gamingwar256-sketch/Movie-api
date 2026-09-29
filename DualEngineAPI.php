@@ -140,8 +140,8 @@ function serveStreamSources($id, $type, $season, $episode) {
 
     // --- SERVER 1: vidsrc (Reliable, uses TMDB) ---
     // Pattern: vidsrc.xyz/embed/movie/{tmdb}
-        $url1 = "https://cinesrc.st" . ($type === 'movie' ? "movie/{$id}" : "tv/{$id}/{$season}/{$episode}");
-        $servers[] = ['label' => 'Server 1 (Fast HD)', 'icon' => '🚀', 'data' => base64_encode($url1)];
+         $url1 = "https://vidsrc.xyz/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}");
+         $servers[] = ['label' => 'Server 1 (Fast HD)', 'icon' => '🚀', 'data' => base64_encode($url1)];
 
      // --- SERVER 2: SuperEmbed (The Redirector) ---
     // Logic: Server-side CURL to resolve the final link
