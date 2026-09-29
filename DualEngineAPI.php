@@ -82,7 +82,8 @@ function serveDiscover($page, $type) {
 
     $endpoint = ($type === 'tv') ? '/discover/tv' : '/discover/movie';
     $params = [
-        'api_key' => TMDB_API_KEY, 'page' => $page, 'language' => 'en-US','region' => 'IN','with_original_language' => 'hi|en|te|ta|ml|kn',
+        'api_key' => TMDB_API_KEY, 'page' => $page, 'language' => 'en-US',
+        'region' => 'IN','with_original_language' => 'hi|en|te|ta|ml|kn',
         'sort_by' => $_GET['sort'] ?? 'popularity.desc',
         'include_adult' => false, 'with_genres' => $_GET['genre'] ?? ''
     ];
@@ -140,7 +141,7 @@ function serveStreamSources($id, $type, $season, $episode) {
 
     // --- SERVER 1: VidSrc (Reliable, uses TMDB) ---
     // Pattern: vidsrc.xyz/embed/movie/{tmdb}
-    $url1 = "https://vidsrc.xyz/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}");
+    $url1 = "https://cinesrc.st/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}");
     $servers[] = ['label' => 'Server 1 (Fast HD)', 'icon' => '🚀', 'data' => base64_encode($url1)];
 
     // --- SERVER 2: SuperEmbed (The Redirector) ---
