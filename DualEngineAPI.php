@@ -140,7 +140,7 @@ function serveStreamSources($id, $type, $season, $episode) {
 
     // --- SERVER 1: VidSrc (Reliable, uses TMDB) ---
     // Pattern: embed.filmu.in/movie/{tmdb}
-       $fallback = "https:embed.filmu.in/movie/{$id}";
+        $url1 = "https:embed.filmu.in/movie/{$id}";
        $servers[] = ['label' => 'Server 1 (Fast HD)', 'icon' => '🚀', 'data' => base64_encode($url1)];
 
     // --- SERVER 2: SuperEmbed (The Redirector) ---
