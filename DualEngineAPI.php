@@ -151,7 +151,7 @@ function serveStreamSources($id, $type, $season, $episode) {
         $servers[] = ['label' => 'Server 2 (Multi-Lang)', 'icon' => '🌍', 'data' => base64_encode($finalSuperEmbed)];
     } else {
         // Fallback to VidSrc.to if SuperEmbed fails
-        $fallback = "https://vidlink.to/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}");
+        $fallback = "https://vidsrc.pm/embed/" . ($type === 'tv' ? "tv/{$id}/{$season}/{$episode}" : "movie/{$id}"ds_lang=hi");
         $servers[] = ['label' => 'Server 2 (Backup)', 'icon' => '⚡', 'data' => base64_encode($fallback)];
     }
 
