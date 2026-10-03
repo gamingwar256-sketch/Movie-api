@@ -16,7 +16,7 @@ if (!isset($_GET['action']) || $_GET['action'] === '') {
     echo "  </url>\n";
 
     // TMDB se popular movies fetch karke sitemap mein dalna
-    $apiKey = ''5478181d128d405468f1d7a676908f08'; // Apni TMDB API key yahan daal dena
+    $apiKey = '5478181d128d405468f1d7a676908f08'; // Apni TMDB API key yahan daal dena
     for ($p = 1; $p <= 3; $p++) {
         $url = "https://api.themoviedb.org/3/movie/popular?api_key=" . $apiKey . "&page=" . $p;
         $ch = curl_init();
