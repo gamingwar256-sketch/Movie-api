@@ -1,36 +1,40 @@
 <?php
-// === EMERGENCY DIRECT SITEMAP BYPASS ===
-// Agar URL mein koi action nahi hai, toh seedha sitemap dikha do
-if (!isset($_GET['action']) || $_GET['action'] === '') {
-    header("Content-Type: application/xml; charset=utf-8");
-    $baseUrl = "https://hd4upr.blogspot.com";
+while (ob_get_level()) {
+    ob_end_clean();
+}
 
-    echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-    echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-    
-    // Homepage
-    echo "  <url>\n";
-    echo "    <loc>" . $baseUrl . "</loc>\n";
-    echo "    <changefreq>daily</changefreq>\n";
-    echo "    <priority>1.0</priority>\n";
-    echo "  </url>\n";
+// Content-Type ko strictly XML set karein taaki browser isko sitemap ki tarah padhe
+header("Content-Type: application/xml; charset=utf-8");
 
-    // TMDB se popular movies fetch karke sitemap mein dalna
-    $apiKey = '5478181d128d405468f1d7a676908f08'; // Apni TMDB API key yahan daal dena
-    for ($p = 1; $p <= 3; $p++) {
-        $url = "https://api.themoviedb.org/3/movie/popular?api_key=" . $apiKey . "&page=" . $p;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        $res = curl_exec($ch);
-        curl_close($ch);
-        
-        if ($res) {
-            $data = json_decode($res, true);
-            if (isset($data['results'])) {
-                foreach ($data['results'] as $movie) {
+$baseUrl = "https://hd4upr.blogspot.com";
+$apiKey = '5478181d128d405468f1d7a676908f08'; // Apni asli TMDB API key yahan daal dena
+
+echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+// Homepage
+echo "  <url>\n";
+echo "    <loc>" . htmlspecialchars($baseUrl) . "</loc>\n";
+echo "    <changefreq>daily</changefreq>\n";
+echo "    <priority>1.0</priority>\n";
+echo "  </url>\n";
+
+// TMDB se multiple pages fetch karke links banana
+for ($p = 1; $p <= 3; $p++) {
+    $url = "https://api.themoviedb.org/3/movie/popular?api_key=" . $apiKey . "&page=" . $p;
+
+    $ctx = stream_context_create([
+        'http' => ['timeout' => 5, 'ignore_errors' => true],
+        'ssl' => ['verify_peer' => false, 'verify_peer_name' => false]
+    ]);
+
+    $response = @file_get_contents($url, false, $ctx);
+
+    if ($response) {
+        $data = json_decode($response, true);
+        if (isset($data['results']) && is_array($data['results'])) {
+            foreach ($data['results'] as $movie) {
+                if (isset($movie['id'])) {
                     $movieUrl = $baseUrl . "/p/movie.html?id=" . $movie['id'];
                     echo "  <url>\n";
                     echo "    <loc>" . htmlspecialchars($movieUrl) . "</loc>\n";
@@ -41,10 +45,11 @@ if (!isset($_GET['action']) || $_GET['action'] === '') {
             }
         }
     }
-    echo '</urlset>';
-    exit;
 }
-// =======================================
+
+echo '</urlset>';
+exit;
+?>
 // =========================================================
 //  MONEY PRINTING ENGINE V3.1 (DOMAIN UPDATE)
 //  - Added: filmy4webmoviesdownload.blogspot.com
